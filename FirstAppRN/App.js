@@ -13,6 +13,7 @@ import Login from './src/components/Authentication/Login/login';
 import Main from './src/components/Main/main';
 // import {ThemeContext, themes} from './src/components/theme-context'
 // import ModalHeader from './src/components/Main/Home/modal-header'
+import {allCategory} from './src/Core/category';
 const Stack = createStackNavigator();
 
 export default function App() {

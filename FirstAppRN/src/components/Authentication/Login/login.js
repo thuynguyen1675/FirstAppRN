@@ -11,77 +11,26 @@ import {
 } from 'react-native';
 import {isUser} from '../../../Core/login';
 import {ThemeContext, themes} from '../../../components/theme-context';
-
+import {allCategory, coursesNew} from '../../../Core/category';
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState(null);
 
   const renderLoginStatus = (status) => {
-    console.log(status);
     if (!status) {
       return <View />;
     } else if (status === 200) {
       props.navigation.navigate('main');
     } else {
-      return <Text>Login failed</Text>;
+      return <Text>{status.errorString}</Text>;
     }
   };
   // useEffect(() => {
-  //             if (status === 200) {
-  //                 props.navigation.navigate('aaa')
-
-  //             }
-
-  //});
-
-  // return <ThemeContext.Consumer>
-  //     {
-  //         ({ theme, setTheme }) => {
-  //             console.log('Login theme: ', theme)
-
-  //             return (<View style={{ ...styles.general, backgroundColor: theme.background }}>
-  //                 <Text style={styles.label}>Email or username</Text>
-  //                 <TextInput style={styles.input}
-  //                     defaultValue={username}
-  //                     onChangeText={text => setUsername(text)}
-  //                     placeholder='Username'
-  //                 />
-
-  //                 <Text style={styles.label}>Password</Text>
-  //                 <TextInput style={styles.input}
-  //                     defaultValue={password}
-  //                     onChangeText={text => setPassword(text)}
-  //                     placeholder='Password'
-  //                     secureTextEntry
-  //                 />
-  //                 {/* {renderLoginStatus(status)} */}
-
-  //                 <View style={styles.touchGroup}>
-  //                     <TouchableHighlight style={[styles.TouchableHighlight, styles.signIn]}
-  //                      onPress={() => {
-  //                         renderLoginStatus(isUser(username, password).status)
-  //             }}
-  //                         >
-  //                         <Text>Sign in</Text>
-  //                     </TouchableHighlight>
-
-  //                     <TouchableHighlight style={styles.TouchableHighlight}    >
-  //                         <Text style={styles.needHelp}>Need help?</Text>
-  //                     </TouchableHighlight>
-
-  //                     <TouchableHighlight style={[styles.TouchableHighlight, styles.otherBtn]}>
-  //                         <Text>Use Single Sign-On (SSO)</Text>
-  //                     </TouchableHighlight>
-
-  //                     <TouchableHighlight style={[styles.TouchableHighlight, styles.otherBtn]}>
-  //                         <Text>Subscribe to Itedu</Text>
-  //                     </TouchableHighlight>
-  //                 </View>
-  //             </View>)
-  //         }
-  //     }
-  // </ThemeContext.Consumer>
+  //   if (msg === 'OK') {
+  //     props.navigation.navigate('aaa');
+  //   }
+  // });
 
   return (
     <View style={styles.general}>
@@ -125,7 +74,14 @@ const Login = (props) => {
       <View style={styles.touchGroup}>
         <TouchableHighlight
           style={[styles.TouchableHighlight, styles.signIn]}
-          onPress={() => renderLoginStatus(isUser(username, password).status)}>
+          onPress={async () => {
+            const user = await isUser(username, password);
+            renderLoginStatus(user.status);
+
+            //const i = await coursesNew();
+            //console.log(i[0].title);
+            //console.log(await isUser(username, password))
+          }}>
           <Text>Sign in</Text>
         </TouchableHighlight>
 
