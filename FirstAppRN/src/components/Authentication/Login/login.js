@@ -12,10 +12,15 @@ import {
 import {isUser} from '../../../Core/login';
 import {ThemeContext, themes} from '../../../components/theme-context';
 import {allCategory, coursesNew} from '../../../Core/category';
+import {callApiLogin} from '../../../Core/callAPI';
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState(null);
+
+  const login = async () => {
+    await callApiLogin(username, password);
+  };
 
   const renderLoginStatus = (status) => {
     if (!status) {
@@ -26,11 +31,6 @@ const Login = (props) => {
       return <Text>{status.errorString}</Text>;
     }
   };
-  // useEffect(() => {
-  //   if (msg === 'OK') {
-  //     props.navigation.navigate('aaa');
-  //   }
-  // });
 
   return (
     <View style={styles.general}>
@@ -75,7 +75,7 @@ const Login = (props) => {
         <TouchableHighlight
           style={[styles.TouchableHighlight, styles.signIn]}
           onPress={async () => {
-            const user = await isUser(username, password);
+            const user = await callApiLogin(username, password);
             renderLoginStatus(user.status);
 
             //const i = await coursesNew();
