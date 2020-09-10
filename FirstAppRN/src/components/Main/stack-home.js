@@ -15,13 +15,13 @@ import Home from './Home/home';
 import Detail from '../Detail/detail';
 import Profile from '../Profile/profile';
 import ListCourses from './ListCourses/list-courses';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-
+import {useDispatch, useSelector} from 'react-redux';
 const Stack = createStackNavigator();
 
 const StackHome = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const name = useSelector((state) => state.user.name);
+  console.log(name);
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,28 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import * as callAPI from '../../Core/callAPI';
 const Detail = (props) => {
+  const {course} = props.route.params;
   const [viewLess, setViewLess] = useState(false);
+  const [instructor, setInstructor] = useState({});
+  useEffect(() => {
+    async function fetData() {
+      if (course.instructorId) {
+        let instructorRes = await callAPI.callApiGetInstructorDetail(
+          course.instructorId,
+        );
+        setInstructor(instructorRes.data.payload);
+      } else {
+        let infoRes = await callApi.callApiGetCourseInfo(course.id);
+        let instructorRes = await callApi.callApiGetInstructorDetail(
+          infoRes.data.payload.instructorId,
+        );
+        setInstructor(instructorRes.data.payload);
+      }
+    }
+    fetData();
+  }, []);
   return (
     <View style={{flex: 1}}>
       {/* <Video source={{uri: "../../../assets/videoplayback.mp4"}}   // Can be a URL or a local file.
@@ -42,10 +62,10 @@ const Detail = (props) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../../../assets/mai-phan.jpg')}
+              source={{uri: instructor.avatar}}
               style={{width: 34, height: 34, borderRadius: 20}}
             />
-            <Text>Scott Allen</Text>
+            <Text>{instructor.name}</Text>
           </TouchableOpacity>
         </View>
 

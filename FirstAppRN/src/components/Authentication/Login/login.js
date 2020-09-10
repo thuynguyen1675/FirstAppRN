@@ -9,17 +9,34 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import {isUser} from '../../../Core/login';
-import {ThemeContext, themes} from '../../../components/theme-context';
-import {allCategory, coursesNew} from '../../../Core/category';
-import {callApiLogin} from '../../../Core/callAPI';
-const Login = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [status, setStatus] = useState(null);
 
-  const login = async () => {
-    await callApiLogin(username, password);
+import {callApiLogin} from '../../../Core/callAPI';
+import {useDispatch} from 'react-redux';
+import * as action from '../../../Action/index';
+const Login = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const login = () => {
+    callApiLogin({email, password})
+      .then((res) => {
+        let data = {
+          name: res.data.userInfo.name,
+          email: res.data.userInfo.email,
+          avatar: res.data.userInfo.avatar,
+          phone: res.data.userInfo.phone,
+          id: res.data.userInfo.id,
+        };
+        //await AsyncStorage.setItem('token', res.data.token);
+        dispatch(action.login(data));
+
+        props.navigation.navigate('main');
+      })
+      .catch((err) => {
+        console.log('* ' + err);
+      });
   };
 
   const renderLoginStatus = (status) => {
@@ -50,8 +67,8 @@ const Login = (props) => {
           <TextInput
             style={{flex: 1}}
             placeholder="Enter Your Email"
-            defaultValue={username}
-            onChangeText={(text) => setUsername(text)}
+            defaultValue={email}
+            onChangeText={(text) => setEmail(text)}
             underlineColorAndroid="transparent"
           />
         </View>
@@ -74,14 +91,17 @@ const Login = (props) => {
       <View style={styles.touchGroup}>
         <TouchableHighlight
           style={[styles.TouchableHighlight, styles.signIn]}
-          onPress={async () => {
-            const user = await callApiLogin(username, password);
-            renderLoginStatus(user.status);
+          onPress={
+            login
+            // async () => {
+            // const user = await callApiLogin(email, password);
+            // renderLoginStatus(user.status);
 
             //const i = await coursesNew();
             //console.log(i[0].title);
-            //console.log(await isUser(username, password))
-          }}>
+            //console.log(await isUser(email, password))
+            //}
+          }>
           <Text>Sign in</Text>
         </TouchableHighlight>
 

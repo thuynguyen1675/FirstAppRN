@@ -1,30 +1,26 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, ScrollView, Image, Text, View} from 'react-native';
-
+import * as callAPI from '../../../Core/callAPI';
 const ListAuthors = () => {
-  const authors = [
-    {
-      id: 1,
-      name: 'Huy Nguyen',
-      ava: require('../../../../assets/huy-nguyen.jpg'),
-    },
-    {
-      id: 2,
-      name: 'Phan Linh',
-      ava: require('../../../../assets/phan-linh.jpeg'),
-    },
-    {
-      id: 3,
-      name: 'Mai Phan',
-      ava: require('../../../../assets/mai-phan.jpg'), //phai de require o day neu de o duoi se ko chay dc
-    },
-  ];
+  const [listAuthors, setListAuthors] = useState([]);
+  useEffect(() => {
+    async function listAuthors() {
+      let list = await (await callAPI.callApiGetAllAuthors()).data.payload;
+      setListAuthors(list);
+    }
+    listAuthors();
+  }, []);
+
   const renderAuthor = (authors) => {
     return authors.map((item) => {
       return (
         <View style={styles.item}>
-          <Image source={item.ava} style={styles.image} key={item.id} />
-          <Text>{item.name}</Text>
+          <Image
+            source={{uri: item['user.avatar']}}
+            style={styles.image}
+            key={item.id}
+          />
+          <Text>{item['user.name']}</Text>
         </View>
       );
     });
@@ -42,7 +38,7 @@ const ListAuthors = () => {
           Top authors
         </Text>
       </View>
-      <ScrollView horizontal={true}>{renderAuthor(authors)}</ScrollView>
+      <ScrollView horizontal={true}>{renderAuthor(listAuthors)}</ScrollView>
     </View>
   );
 };

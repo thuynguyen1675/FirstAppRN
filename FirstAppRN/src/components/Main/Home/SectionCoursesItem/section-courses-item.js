@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 //import StarRating from 'react-native-star-rating';
 
-// require('../../../../../assets/money.png')
-
 const SectionCoursesItem = (props) => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => props.navigation.navigate('Detail')}>
-      <Image source={props.item.imageUrl} style={styles.image} />
+      onPress={() => props.navigation.navigate('Detail', {course: props.item})}>
+      <Image source={{uri: props.item['imageUrl']}} style={styles.image} />
       <View style={{marginTop: 7, marginLeft: 7}}>
         <Text>{props.item.title}</Text>
         <Text>{props.item['instructor.user.name']}</Text>

@@ -1,13 +1,5 @@
-import React, {Component} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Text,
-  ImageBackground,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, ScrollView} from 'react-native';
 import ImageButton from './image-button';
 import Type from './type';
 import ListSkill from './list-skill';

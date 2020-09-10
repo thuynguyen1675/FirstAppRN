@@ -6,15 +6,15 @@ const ListCourseItem = (props) => {
   return (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => props.navigation.navigate('Detail')}>
-      <Image source={props.item.thumnail} style={styles.image} />
+      onPress={() => props.navigation.navigate('Detail', {course: props.item})}>
+      <Image source={{uri: props.item.imageUrl}} style={styles.image} />
       <View style={{marginTop: 7}}>
         <Text>{props.item.title}</Text>
-        <Text>{props.item.author}</Text>
-        <Text>{`${props.item.release} - ${props.item.duration}`}</Text>
+        <Text>{props.item['instructor.user.name']}</Text>
+        {/* <Text>{`${props.item.release} - ${props.item.duration}`}</Text>
         <View style={{flexDirection: 'row'}}>
-          <View style={{width: 100}}>
-            {/* <StarRating
+          <View style={{width: 100}}> */}
+        {/* <StarRating
       disabled={false}
       maxStars={5}
       starSize={20}
@@ -22,9 +22,9 @@ const ListCourseItem = (props) => {
       rating={props.item.stars}        
       selectedStar={(rating) => this.onStarRatingPress(rating)}
     /> */}
-          </View>
+        {/* </View>
           <Text>{`  (${props.item.evaluation})`}</Text>
-        </View>
+        </View> */}
       </View>
     </TouchableOpacity>
   );

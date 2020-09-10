@@ -1,27 +1,15 @@
-import React, {Component, useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
   ScrollView,
   Text,
   StyleSheet,
   Image,
-  Alert,
   TouchableOpacity,
 } from 'react-native';
 import SectionCoursesItem from '../SectionCoursesItem/section-courses-item';
-import {coursesNew} from '../../../../Core/category';
-//import {useState} from 'react';
 
 const SectionCourses = (props) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    async function ptct() {
-      const item = await coursesNew();
-      setData(item);
-    }
-    ptct();
-  }, []);
-
   const renderListItems = (courses, navigation) => {
     return courses.map((item) => (
       <SectionCoursesItem item={item} navigation={navigation} key={item.id} />
@@ -39,14 +27,14 @@ const SectionCourses = (props) => {
             alignItems: 'center',
           }}
           onPress={() => {
-            props.navigation.navigate('ListCourses');
+            props.navigation.navigate('ListCourses', {title: props.title});
           }}>
           <Text>See more</Text>
           <Image source={require('../../../../../assets/more-black.png')} />
         </TouchableOpacity>
       </View>
       <ScrollView horizontal={true}>
-        {renderListItems(data, props.navigation)}
+        {renderListItems(props.data, props.navigation)}
       </ScrollView>
     </View>
   );
