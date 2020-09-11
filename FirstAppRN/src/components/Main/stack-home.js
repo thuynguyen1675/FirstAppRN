@@ -1,14 +1,11 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
-  Button,
   Modal,
   StyleSheet,
   TouchableOpacity,
   Text,
   Image,
   View,
-  FlatList,
-  Alert,
 } from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './Home/home';
@@ -20,8 +17,9 @@ const Stack = createStackNavigator();
 
 const StackHome = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const name = useSelector((state) => state.user.name);
-  console.log(name);
+  //const name = useSelector((state) => state.name);
+  const avatar = useSelector((state) => state.user.avatar);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -34,10 +32,7 @@ const StackHome = (props) => {
                 <TouchableOpacity
                   style={styles.btn}
                   onPress={() => props.navigation.navigate('Profile')}>
-                  <Image
-                    source={require('../../../assets/mai-phan.jpg')}
-                    style={styles.btn}
-                  />
+                  <Image source={{uri: avatar}} style={styles.btn} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.btn}

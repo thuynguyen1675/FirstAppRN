@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import * as callAPI from '../../Core/callAPI';
 const Detail = (props) => {
-  const {course} = props.route.params;
+  const {course} = props.route.params; //{} vi lay nguyen tu do qua
   const [viewLess, setViewLess] = useState(false);
   const [instructor, setInstructor] = useState({});
   useEffect(() => {

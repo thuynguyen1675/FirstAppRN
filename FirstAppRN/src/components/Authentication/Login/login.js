@@ -4,10 +4,8 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableHighlight,
   Image,
-  Alert,
 } from 'react-native';
 
 import {callApiLogin} from '../../../Core/callAPI';
@@ -38,7 +36,6 @@ const Login = (props) => {
         console.log('* ' + err);
       });
   };
-
   const renderLoginStatus = (status) => {
     if (!status) {
       return <View />;

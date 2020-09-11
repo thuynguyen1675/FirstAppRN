@@ -1,4 +1,4 @@
-import {types} from '../constant';
+import {types} from '../src/constant';
 
 const initialState = {
   name: null,
@@ -41,5 +41,3 @@ export default function user(state = initialState, action) {
       return state;
   }
 }
-
-export const selectCount = (state) => state.name;
