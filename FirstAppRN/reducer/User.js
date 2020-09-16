@@ -8,6 +8,7 @@ const initialState = {
   id: null,
   following: [],
   favorite: [],
+  token: null,
 };
 export default function user(state = initialState, action) {
   switch (action.type) {
@@ -19,6 +20,7 @@ export default function user(state = initialState, action) {
         avatar: action.data.avatar,
         phone: action.data.phone,
         id: action.data.id,
+        token: action.data.token,
       };
     }
     case types.FOLLOW_AUTHOR: {

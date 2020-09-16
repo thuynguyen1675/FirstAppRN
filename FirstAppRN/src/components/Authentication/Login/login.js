@@ -26,6 +26,7 @@ const Login = (props) => {
           avatar: res.data.userInfo.avatar,
           phone: res.data.userInfo.phone,
           id: res.data.userInfo.id,
+          token: res.data.token,
         };
         //await AsyncStorage.setItem('token', res.data.token);
         dispatch(action.login(data));
@@ -88,17 +89,7 @@ const Login = (props) => {
       <View style={styles.touchGroup}>
         <TouchableHighlight
           style={[styles.TouchableHighlight, styles.signIn]}
-          onPress={
-            login
-            // async () => {
-            // const user = await callApiLogin(email, password);
-            // renderLoginStatus(user.status);
-
-            //const i = await coursesNew();
-            //console.log(i[0].title);
-            //console.log(await isUser(email, password))
-            //}
-          }>
+          onPress={login}>
           <Text>Sign in</Text>
         </TouchableHighlight>
 
